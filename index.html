@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <meta name="theme-color" content="#000000">
+    <meta name="keywords" content="MakeGirls.moe, makegirlsmoe, Deep learning, AI, Artificial intelligence, GAN, Generative adversarial networks, DCGAN, Conditional DCGAN, DRAGAN, ACGAN, WebDNN, Girl illustrations, Face generator, Avatar, Anime, Anime Face, Game, Girls">
+    <meta name="description" content="MakeGirlsMoe - Create Anime Characters with A.I.! Automatically generate an anime character with your customization. You can specify some attributes such as blonde hair, twin tail, smile, etc."/>
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:url" content="http://make.girls.moe" />
+    <meta property="og:title" content="MakeGirlsMoe" />
+    <meta property="og:description" content="Create Anime Characters with A.I.!" />
+    <meta property="og:image" content="http://make.girls.moe/thumb.png" />
+
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch&flags=gated"></script>
+    <script src="%PUBLIC_URL%/modules/webdnn/inflate.min.js"></script>
+    <script src="%PUBLIC_URL%/modules/webdnn/webdnn.es5.js"></script>
+
+    <title>MakeGirlsMoe - Create Anime Characters with A.I.!</title>
+
+</head>
+<body>
+    <noscript>
+        You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+
+    <!-- Twitter -->
+    <script>window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
+
+        return t;
+    }(document, "script", "twitter-wjs"));</script>
+</body>
+</html>

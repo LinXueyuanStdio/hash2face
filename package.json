@@ -1,0 +1,31 @@
+{
+  "name": "hash2face",
+  "version": "0.0.1",
+  "description": "my first node.js app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/LinXueyuanStdio/hash2face.git"
+  },
+  "keywords": [
+    "hash",
+    "face",
+    "GAN"
+  ],
+  "author": "林学渊",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LinXueyuanStdio/hash2face/issues"
+  },
+  "homepage": "https://github.com/LinXueyuanStdio/hash2face#readme",
+  "dependencies": {
+    "canvas": "^2.0.0-alpha.8"
+  },
+  "devDependencies": {
+    "express": "latest"
+  }
+}
