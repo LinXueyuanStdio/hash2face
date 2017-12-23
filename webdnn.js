@@ -310,7 +310,6 @@ function isXHR2WithBlobSupported() {
     // if (!window.hasOwnProperty('ProgressEvent') || !window.hasOwnProperty('FormData')) {
     //     return false;
     // }
-    return false;
     let xhr = new XMLHttpRequest();
     if (typeof xhr.responseType === 'string') {
         try {

@@ -1,6 +1,15 @@
 var Config = require('./Config')
 var Utils = require('./Utils')
-var WebDNN = require('./modules/webdnn/webdnn')
+// var WebDNN = require('./modules/webdnn/webdnn')
+global.navigator = {
+    userAgent: "node 8",
+}
+
+global.Worker = require('webworker-threads').Worker
+
+global.window = global
+
+var WebDNN = require('./webdnn/src/descriptor_runner/lib/webdnn')
 
 class GAN {
 
@@ -26,7 +35,7 @@ class GAN {
     }
 
     getBackendOrder() {
-        let order = ['webgpu', 'webassembly'];
+        let order = ['webgpu', 'webassembly', "fallback", "webgl"];
         // let state = store.getState();
         // if (!state.generatorConfig.webglDisabled) {
         //     order.splice(1, 0, 'webgl')
@@ -49,13 +58,20 @@ class GAN {
         var modelPath = Config.modelCompression ? this.modelConfig.gan.model + '_8bit' : this.modelConfig.gan.model;
         this.runner = await WebDNN.load(modelPath, { 
             progressCallback: onInitProgress, 
-            weightDirectory: await this.getWeightFilePrefix(), 
-            backendOrder: this.getBackendOrder() 
+            weightDirectory: "http://localhost:8888/models/Bouvardia128_8bit", //await this.getWeightFilePrefix(), 
+            backendOrder: this.getBackendOrder(),
+            saveCache: false
         });
     }
 
     async run(label, noise) {
-        this.init();
+        this.runner = await WebDNN.load("./models/Bouvardia128_8bit",{//modelPath, {
+            progressCallback: null,
+            weightDirectory: "./models/Bouvardia128_8bit", //await this.getWeightFilePrefix(), 
+            backendOrder: this.getBackendOrder(),
+            cacheStrategy: "networkOnly",
+            saveCache: false
+        });
         this.currentNoise = noise || Array.apply(null, { length: this.modelConfig.gan.noiseLength }).map(() => Utils.randomNormal());
         let input = this.currentNoise.concat(label);
         this.currentInput = input;
