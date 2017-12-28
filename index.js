@@ -265,9 +265,9 @@ class Generator {
 
         var result = await this.gan.run(label, noise);
 
-        // console.log("label", label);
-        // console.log("noise", noise);
-        // console.log("result", result);
+        console.log("label", label);
+        console.log("noise", noise);
+        console.log("result", result);
         return result;
     }
 

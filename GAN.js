@@ -5,7 +5,7 @@ global.navigator = {
     userAgent: "node 8",
 }
 
-global.Worker = require('webworker-threads').Worker
+// global.Worker = require('webworker-threads').Worker
 
 global.window = global
 

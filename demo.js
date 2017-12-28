@@ -1,23 +1,9 @@
-const { createCanvas, loadImage } = require('canvas')
-const canvas = createCanvas(200, 200)
-const ctx = canvas.getContext('2d')
+var pako = require('pako')
+   , input = pako.deflate([1, 2, 3, 4, 5, 6, 7, 8, 9])
+   , output;
 
-// Write "Awesome!"
-ctx.font = '30px Impact'
-ctx.rotate(0.1)
-ctx.fillText('Awesome!', 50, 100)
-
-// Draw line under text
-var text = ctx.measureText('Awesome!')
-ctx.strokeStyle = 'rgba(0,0,0,0.5)'
-ctx.beginPath()
-ctx.lineTo(50, 102)
-ctx.lineTo(50 + text.width, 102)
-ctx.stroke()
-
-// Draw cat with lime helmet
-loadImage('examples/images/lime-cat.jpg').then((image) => {
-    ctx.drawImage(image, 50, 0, 70, 70)
-
-    console.log('<img src="' + canvas.toDataURL() + '" />')
-})
+ try {
+   output = pako.inflate(input);
+ } catch (err){
+   console.log(err);
+ }
