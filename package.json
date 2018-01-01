@@ -23,10 +23,11 @@
   },
   "homepage": "https://github.com/LinXueyuanStdio/hash2face#readme",
   "dependencies": {
-    "bluebird": "^3.5.1",
     "canvas": "^2.0.0-alpha.8",
-    "localforage": "^1.5.5",
+    "eventemitter3": "^3.0.0",
+    "get-image-data": "^3.0.1",
     "pako": "^1.0.6",
+    "prettier": "^1.9.2",
     "q-io": "^1.13.4",
     "webworker-threads": "^0.7.13"
   },

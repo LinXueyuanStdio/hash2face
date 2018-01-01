@@ -1,6 +1,5 @@
 var debug = true
-var debugUrlPrefix = "chrome-devtools://devtools/bundled/inspector.html?experiments=true&v8only=true&ws=localhost:9229/ad59547d-7829-49f2-a8e3-d548edb9374f"
-var backendUrlPrefix = (debug ? 'http://localhost:8888' : '')
+var backendUrlPrefix = (debug ? 'http://localhost:4000' : '')
 var Config = {
     colors: {
         theme: '#bd1c1b',

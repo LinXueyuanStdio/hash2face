@@ -344,9 +344,9 @@ function readArrayBufferProgressively(res, callback) {
  * @protected
  */
 function isXHR2WithBlobSupported() {
-    // if (!window.hasOwnProperty('ProgressEvent') || !window.hasOwnProperty('FormData')) {
+    if (!window.hasOwnProperty('ProgressEvent') || !window.hasOwnProperty('FormData')) {
         return false;
-    // }
+    }
     var xhr = new XMLHttpRequest();
     if (typeof xhr.responseType === 'string') {
         try {
@@ -927,7 +927,7 @@ var DescriptorRunnerWebassembly = (function (_super) {
         return _this;
     }
     DescriptorRunnerWebassembly.checkAvailability = function () {
-        return false;//'Worker' in window;
+        return 'Worker' in window;
     };
     DescriptorRunnerWebassembly.prototype.init = function () {
         if (!DescriptorRunnerWebassembly.checkAvailability())
@@ -1422,7 +1422,7 @@ var WebGLHandler = (function () {
             });
         });
     };
-    WebGLHandler.IS_SAFARI = false;// navigator.userAgent.toLowerCase().indexOf('safari') !== -1 && navigator.userAgent.toLowerCase().indexOf('chrome') === -1;
+    WebGLHandler.IS_SAFARI = navigator.userAgent.toLowerCase().indexOf('safari') !== -1 && navigator.userAgent.toLowerCase().indexOf('chrome') === -1;
     return WebGLHandler;
 }());
 var availability = null;
@@ -2401,7 +2401,7 @@ var WebGPUHandler = (function () {
  * Flag whether WebGPU is supported or not
  * @protected
  */
-var IS_WEBGPU_SUPPORTED =  false;// 'WebGPURenderingContext' in window && 'WebGPUComputeCommandEncoder' in window;
+var IS_WEBGPU_SUPPORTED = 'WebGPURenderingContext' in window && 'WebGPUComputeCommandEncoder' in window;
 
 /**
  * @module webdnn
@@ -2498,7 +2498,7 @@ var BufferWebGPU = (function (_super) {
 /**
  * @private
  */
-var IS_IOS = false;//navigator.userAgent.includes('iPhone');
+var IS_IOS = navigator.userAgent.includes('iPhone');
 /**
  * @protected
  */

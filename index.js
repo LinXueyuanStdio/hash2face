@@ -5,8 +5,8 @@ var Config = require('./Config')
 var Utils = require('./Utils')
 var GAN = require('./GAN')
 // var inflate = require('./modules/webdnn/inflate.min')
-// var WebDNN = require('./modules/webdnn/webdnn')
-var WebDNN = require('./webdnn/src/descriptor_runner/lib/webdnn')
+var WebDNN = require('./modules/webdnn/webdnn')
+
 class Generator {
     constructor(gan, modelConfig) {
         this.state = {
@@ -32,89 +32,88 @@ class Generator {
     }
 
     setModel(modelName = this.currentModel, disableWebgl = this.disableWebgl) {
-        return new Promise((resolve, reject) => {
-            var keyName = modelName + (disableWebgl ? '_nowebgl' : '');
+        // return new Promise((resolve, reject) => {
+        //     var keyName = modelName + (disableWebgl ? '_nowebgl' : '');
 
-            if (!this.ganDict[keyName]) {
-                var gan = GAN(Config.modelConfig[modelName]);
-                var state = {
-                    loadingProgress: 0,
-                    isReady: false,
-                    isRunning: false,
-                    isCanceled: false,
-                    isError: false
-                };
-                this.ganDict[keyName] = {
-                    gan: gan,
-                    state: state
-                };
-            }
-            else {
-                resolve();
-            }
-            this.gan = this.ganDict[keyName].gan;
-        });
+        //     if (!this.ganDict[keyName]) {
+        //         var gan = GAN(Config.modelConfig[modelName]);
+        //         var state = {
+        //             loadingProgress: 0,
+        //             isReady: false,
+        //             isRunning: false,
+        //             isCanceled: false,
+        //             isError: false
+        //         };
+        //         this.ganDict[keyName] = {
+        //             gan: gan,
+        //             state: state
+        //         };
+        //     }
+        //     else {
+        //         resolve();
+        //     }
+        //     this.gan = this.ganDict[keyName].gan;
+        // });
     }
 
     async init() {
-        try {
-            await this.setModel();
-        }
-        catch (err) {
-            // console.log(err);
-        }
+        // try {
+        //     await this.setModel();
+        // }
+        // catch (err) {
+        //     console.log(err);
+        // }
     }
     // 随机生成 配置数组
-    /*getOptionValuesFromRandom(originalOptionInputs) {
-        var optionInputs = window.$.extend(true, {}, originalOptionInputs);
-        this.getModelConfig().options.forEach(option => {
-            var optionInput = optionInputs[option.key];
+    // getOptionValuesFromRandom(originalOptionInputs) {
+    //     var optionInputs = window.$.extend(true, {}, originalOptionInputs);
+    //     this.getModelConfig().options.forEach(option => {
+    //         var optionInput = optionInputs[option.key];
 
-            if (!optionInput || optionInput.random) {
-                optionInput = optionInputs[option.key] = { random: true };
+    //         if (!optionInput || optionInput.random) {
+    //             optionInput = optionInputs[option.key] = { random: true };
 
-                if (option.type === 'multiple') {
-                    var value = Array.apply(null, { length: option.options.length }).fill(-1);
-                    if (option.isIndependent) {
-                        for (var j = 0; j < option.options.length; j++) {
-                            value[j] = Math.random() < option.prob[j] ? 1 : -1;
-                        }
-                    }
-                    else {
-                        var random = Math.random();
-                        for (j = 0; j < option.options.length; j++) {
-                            if (random < option.prob[j]) {
-                                value[j] = 1;
-                                break;
-                            }
-                            else {
-                                random -= option.prob[j];
-                            }
-                        }
-                    }
-                    optionInput.value = value;
-                }
-                else if (option.type === 'continuous') {
-                    var min = option.samplingMin || option.min;
-                    var max = option.samplingMax || option.max;
-                    optionInput.value = Math.floor(Math.random() * ((max - min) / option.step + 1)) * option.step + min;
-                }
-                else {
-                    optionInput.value = Math.random() < option.prob ? 1 : -1;
-                }
-            }
-        });
+    //             if (option.type === 'multiple') {
+    //                 var value = Array.apply(null, { length: option.options.length }).fill(-1);
+    //                 if (option.isIndependent) {
+    //                     for (var j = 0; j < option.options.length; j++) {
+    //                         value[j] = Math.random() < option.prob[j] ? 1 : -1;
+    //                     }
+    //                 }
+    //                 else {
+    //                     var random = Math.random();
+    //                     for (j = 0; j < option.options.length; j++) {
+    //                         if (random < option.prob[j]) {
+    //                             value[j] = 1;
+    //                             break;
+    //                         }
+    //                         else {
+    //                             random -= option.prob[j];
+    //                         }
+    //                     }
+    //                 }
+    //                 optionInput.value = value;
+    //             }
+    //             else if (option.type === 'continuous') {
+    //                 var min = option.samplingMin || option.min;
+    //                 var max = option.samplingMax || option.max;
+    //                 optionInput.value = Math.floor(Math.random() * ((max - min) / option.step + 1)) * option.step + min;
+    //             }
+    //             else {
+    //                 optionInput.value = Math.random() < option.prob ? 1 : -1;
+    //             }
+    //         }
+    //     });
 
-        if (!optionInputs.noise || optionInputs.noise.random) {
-            var value = [];
-            optionInputs.noise = { random: true, value: value };
-            Array.apply(null, { length: this.getModelConfig().gan.noiseLength }).map(() => Utils.randomNormal((u, v) => value.push([u, v])));
-            console.log(optionInputs.noise);
-        }
+    //     if (!optionInputs.noise || optionInputs.noise.random) {
+    //         var value = [];
+    //         optionInputs.noise = { random: true, value: value };
+    //         Array.apply(null, { length: this.getModelConfig().gan.noiseLength }).map(() => Utils.randomNormal((u, v) => value.push([u, v])));
+    //         console.log(optionInputs.noise);
+    //     }
 
-        return optionInputs;
-    }
-    */
+    //     return optionInputs;
+    // }
     // 根据 hash 生成 配置数组
     getOptionValuesFromHash(originalOptionInputs, hash) {
         var optionInputs = originalOptionInputs;
@@ -168,7 +167,6 @@ class Generator {
 
     getLabel(optionInputs) {
         var label = Array.apply(null, { length: this.getModelConfig().gan.labelLength });
-        // console.log("label", label);
         this.getModelConfig().options.forEach(option => {
             var optionInput = optionInputs[option.key];
 
@@ -194,7 +192,7 @@ class Generator {
      * @param hash 是一个 ArrayBuffer，会转成 Uint8Array, Uint8Array 长度 >= 267(=11+128+128), 每位数在[0, 255]之间
      * @param option_key 配置项
      * @param index 在hash上配置项对应的位置，一个位置产生一个[0,1)的浮点数，作为“随机数”
-     * 
+     *
      * @return 配置项在hash上对应位置产生的[0,1)的浮点数，作为“随机数”
      */
     getRate(hash, option_key, index) {
@@ -274,9 +272,7 @@ class Generator {
 }
 
 function generator(GAN, modelConfig) {
-    var g = new Generator(GAN, modelConfig)
-    g.init()
-    return g
+    return new Generator(GAN, modelConfig)
 }
 
 module.exports = generator

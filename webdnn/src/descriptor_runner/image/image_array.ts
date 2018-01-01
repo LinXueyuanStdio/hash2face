@@ -7,7 +7,7 @@ import { getContext2D } from "./canvas";
 import { Color, Order } from "./enums";
 import { DestinationRect, getImageData, setImageDataToCanvas, SourceRect } from "./image_data";
 import { loadImageByUrl, loadImageFromFileInput } from "./image_source";
-
+import { ImageData } from "canvas";
 /**
  * @protected
  */

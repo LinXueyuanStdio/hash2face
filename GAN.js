@@ -1,13 +1,15 @@
 var Config = require('./Config')
 var Utils = require('./Utils')
 // var WebDNN = require('./modules/webdnn/webdnn')
+
 global.navigator = {
-    userAgent: "node 8",
+    userAgent: "nodejs",
 }
 
-// global.Worker = require('webworker-threads').Worker
+global.Worker = require('./fakeWorker').Worker
 
 global.window = global
+
 
 var WebDNN = require('./webdnn/src/descriptor_runner/lib/webdnn')
 
@@ -35,13 +37,14 @@ class GAN {
     }
 
     getBackendOrder() {
-        let order = ['webgpu', 'webassembly', "fallback", "webgl"];
-        // let state = store.getState();
-        // if (!state.generatorConfig.webglDisabled) {
-        //     order.splice(1, 0, 'webgl')
-        // }
+        // let order = ['webgpu', 'webassembly'];
+        // // let state = store.getState();
+        // // if (!state.generatorConfig.webglDisabled) {
+        // //     order.splice(1, 0, 'webgl')
+        // // }
 
-        return order[1];
+        // return order[1];
+        return "webassembly";
     }
 
     static getWebglTextureSize() {
@@ -56,22 +59,15 @@ class GAN {
 
     async init(onInitProgress) {
         var modelPath = Config.modelCompression ? this.modelConfig.gan.model + '_8bit' : this.modelConfig.gan.model;
-        this.runner = await WebDNN.load(modelPath, { 
-            progressCallback: onInitProgress, 
-            weightDirectory: "http://localhost:8888/models/Bouvardia128_8bit", //await this.getWeightFilePrefix(), 
-            backendOrder: this.getBackendOrder(),
-            saveCache: false
+        this.runner = await WebDNN.load(modelPath, {
+            progressCallback: onInitProgress,
+            weightDirectory: "./models", // await this.getWeightFilePrefix(),
+            backendOrder: this.getBackendOrder()
         });
     }
 
     async run(label, noise) {
-        this.runner = await WebDNN.load("./models/Bouvardia128_8bit",{//modelPath, {
-            progressCallback: null,
-            weightDirectory: "./models/Bouvardia128_8bit", //await this.getWeightFilePrefix(), 
-            backendOrder: this.getBackendOrder(),
-            cacheStrategy: "networkOnly",
-            saveCache: false
-        });
+        await this.init();
         this.currentNoise = noise || Array.apply(null, { length: this.modelConfig.gan.noiseLength }).map(() => Utils.randomNormal());
         let input = this.currentNoise.concat(label);
         this.currentInput = input;

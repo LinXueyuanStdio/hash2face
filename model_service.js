@@ -1,7 +1,7 @@
 var http = require('http');
 var fs = require('fs');//引入文件读取模块
 
-var documentRoot = '/home/dlinking-lxy/more-space/default-repo/hash2face';
+var documentRoot = '/path/to/hash2face';
 //需要访问的文件的存放目录
 var PORT = process.env.PORT || 5000
 var server = http.createServer(function (req, res) {
