@@ -36,7 +36,6 @@ http.createServer(function (req, res) {
         154, 152, 251, 47, 13, 59, 4, 25, 89, 250, 140, 169, 120, 34, 240, 210, 147,
         154, 152, 251, 47, 13, 59, 4, 25, 89, 250, 140, 169, 120, 34, 240, 210, 147,]).buffer
     )
-    console.log(r)
     // console.log(r)
     res.writeHead(200, { 'Content-Type': 'text/html' })
     res.end(

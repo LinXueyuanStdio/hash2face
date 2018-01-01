@@ -3,18 +3,14 @@ var fs = require('fs');//引入文件读取模块
 
 var documentRoot = '/home/dlinking-lxy/more-space/default-repo/hash2face';
 //需要访问的文件的存放目录
-
+var PORT = process.env.PORT || 5000
 var server = http.createServer(function (req, res) {
-
     var url = req.url;
     //客户端输入的url，例如如果输入localhost:8888/index.html
     //那么这里的url == /index.html 
-
     var file = documentRoot + url;
     console.log(url);
     //E:/PhpProject/html5/websocket/www/index.html 
-
-
     fs.readFile(file, function (err, data) {
         /*
             一参为文件路径
@@ -34,13 +30,8 @@ var server = http.createServer(function (req, res) {
             });
             res.write(data);//将index.html显示在客户端
             res.end();
-
         }
-
     });
-
-
-
-}).listen(8888);
-
-console.log('服务器开启成功');
+}).listen(PORT, function () {
+    console.log('Server started on port ', PORT);
+})
