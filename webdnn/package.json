@@ -39,7 +39,7 @@
     "dependencies": {
         "dts-generator": "^2.1.0",
         "eventemitter3": "^3.0.0",
-        "handlebars": "^4.0.10",
+        "handlebars": "^4.4.5",
         "pako": "^1.0.6",
         "prettier": "^1.9.2",
         "q-io": "^1.13.4",
